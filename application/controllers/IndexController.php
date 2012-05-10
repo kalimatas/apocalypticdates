@@ -3,16 +3,10 @@
 class IndexController extends Zend_Controller_Action
 {
 
-    public function init()
-    {
-        /* Initialize action controller here */
-    }
-
     public function indexAction()
     {
-        // action body
+        // list all dates
+        $datesTable = new Apoc_Model_Date_Table();
+        $this->view->dates = $datesTable->fetchAll();
     }
-
-
 }
-
