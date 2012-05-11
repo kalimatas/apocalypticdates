@@ -1,12 +1,15 @@
 <?php
 
-class IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+class IndexControllerTest extends PHPUnit_ControllerTestCase
 {
-
-    public function setUp()
+    public function setUpDatabase()
     {
-        $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
-        parent::setUp();
+        $this->setUpConnectionAndTester();
+
+        $databaseFixture = new PHPUnit_Extensions_Database_DataSet_YamlDataSet(TESTS_PATH . '/application/models/Author/_files/author.yml');
+        $databaseFixture->addYamlFile(TESTS_PATH . '/application/models/Date/_files/date.yml');
+
+        $this->_simpleTester->setupDatabase($databaseFixture);
     }
 
     public function testIndexAction()

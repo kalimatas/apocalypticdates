@@ -4,6 +4,9 @@
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 
+defined('TESTS_PATH')
+    || define('TESTS_PATH', realpath(dirname(__FILE__) . '/../tests'));
+
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'testing'));
@@ -14,5 +17,15 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
-require_once 'Zend/Loader/Autoloader.php';
-Zend_Loader_Autoloader::getInstance();
+/** Zend_Application */
+require_once 'Zend/Application.php';
+
+$configFile = APPLICATION_PATH . '/configs/application.ini';
+
+$application = new Zend_Application(
+    APPLICATION_ENV,
+    $configFile
+);
+$application->bootstrap();
+
+Zend_Registry::set('Config', new Zend_Config_Ini($configFile, APPLICATION_ENV, true));

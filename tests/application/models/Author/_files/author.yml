@@ -1,0 +1,9 @@
+author:
+    -
+        id: 1
+        name: "First author"
+        description: "Description of the first author"
+    -
+        id: 2
+        name: "Second author"
+        description: "Description of the second author"
