@@ -2,6 +2,9 @@
 
 class DateTableTest extends PHPUnit_DatabaseTestCase
 {
+    /**
+     * @var Apoc_Model_Date_Table
+     */
     protected $_table;
 
     protected function setUp()
@@ -19,7 +22,7 @@ class DateTableTest extends PHPUnit_DatabaseTestCase
     /**
      * Should pass :))
      */
-    public function testWhetherNotHasHappened()
+    public function testWhetherHasNotHappened()
     {
         $happenedDates = $this->_table->fetchAll(
             $this->_table->select()
