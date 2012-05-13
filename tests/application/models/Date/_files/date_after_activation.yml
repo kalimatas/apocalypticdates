@@ -4,8 +4,10 @@ date:
         author_id: 1
         date: "1666"
         description: "ha-ha"
+        happened: 0
     -
         id: 2
         author_id: 2
         date: "2012"
         description: "Something may happen"
+        happened: 1

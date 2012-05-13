@@ -31,4 +31,24 @@ class DateTableTest extends PHPUnit_DatabaseTestCase
 
         $this->assertEquals($happenedDates->count(), 0);
     }
+
+    /**
+     * Let's activate one date. No. We are not going to die.
+     */
+    public function testActivateAction()
+    {
+        /** @var $date Apoc_Model_Date_Row */
+        $date = $this->_table->fetchRow('id = 2');
+        $date->activate();
+
+        // and compare with expected result
+        $expectedDataSet = new PHPUnit_Extensions_Database_DataSet_YamlDataSet(dirname(__FILE__) . '/_files/date_after_activation.yml');
+        $expectedTable = $expectedDataSet->getTable('date');
+
+        $queryTable = $this->getConnection()->createQueryTable(
+            'date', 'SELECT * FROM date'
+        );
+
+        $this->assertTablesEqual($expectedTable, $queryTable);
+    }
 }

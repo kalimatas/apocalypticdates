@@ -19,7 +19,6 @@ class IndexControllerTest extends PHPUnit_ControllerTestCase
         $url = $this->url($urlParams);
         $this->dispatch($url);
 
-        // assertions
         $this->assertModule($urlParams['module']);
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
@@ -46,11 +45,11 @@ class IndexControllerTest extends PHPUnit_ControllerTestCase
      */
     public function testInvalidAuthorAction()
     {
-        $this->request->setMethod(Zend_Http_Client::POST);
-        $this->request->setPost(array(
+        $this->getRequest()->setMethod(Zend_Http_Client::POST);
+        $this->getRequest()->setPost(array(
             'author_id' => 42, // no such author_id in fixture author.yml
             'date' => 'Some year',
-            'description' => 'This date cannot happen withou author :))',
+            'description' => 'This date cannot happen without author :))',
         ));
 
         $this->dispatch('/index/new/');
@@ -61,5 +60,28 @@ class IndexControllerTest extends PHPUnit_ControllerTestCase
 
         // we must see an error message
         $this->assertQueryContentContains("div#content h3", "Author with id \"42\" doesn't exist.");
+    }
+
+    /**
+     * Create new date.
+     */
+    public function testCreateAction()
+    {
+        $this->getRequest()->setMethod(Zend_Http_Client::POST);
+        $this->getRequest()->setPost(array(
+            'author_id' => 1,
+            'date' => 'New year',
+            'description' => 'As usual',
+        ));
+
+        $this->dispatch('/index/new/');
+
+        // we should not see an error page, but default index
+        $this->assertModule('default');
+        $this->assertController('index');
+        $this->assertAction('new');
+
+        // we must see an "ok" message
+        $this->assertQueryContentContains("div#content h4", "ok");
     }
 }
