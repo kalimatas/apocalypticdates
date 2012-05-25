@@ -1,0 +1,3 @@
+h2. Apocalyptic dates
+
+The aim of this code is to show how to write unit tests for ZF applications. You can read about it "here":http://guzalexander.com/2012/05/18/test-apocalyptic-dates-with-zf-and-phpunit.html.
